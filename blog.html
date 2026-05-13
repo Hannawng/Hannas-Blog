@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hanna's Blog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    :root {
+      --navy: #2F3A55; --slate: #5C6B8A; --mid: #6E6F73;
+      --warm: #e7e2de; --light: #F5F6F3; --white: #ffffff;
+    }
+    body { font-family: 'Jost', sans-serif; background: var(--light); color: var(--navy); line-height: 1.6; }
+
+    /* ── LANGUAGE BAR ── */
+    .lang-bar {
+      background: var(--navy); display: flex; justify-content: flex-end;
+      align-items: center; padding: 0.45rem 4rem; gap: 0.4rem;
+    }
+    .lang-label { font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-right: 0.5rem; }
+    .lang-btn {
+      font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 0.22rem 0.65rem; border: 1px solid transparent; background: none;
+      color: rgba(255,255,255,0.45); cursor: pointer; font-family: 'Jost', sans-serif; transition: all 0.2s;
+    }
+    .lang-btn.active { background: rgba(255,255,255,0.15); color: #fff; border-color: rgba(255,255,255,0.3); }
+    .lang-btn:hover { color: #fff; }
+    .lang-sep { color: rgba(255,255,255,0.2); font-size: 0.7rem; }
+
+    /* ── LANGUAGE VISIBILITY ── */
+    [data-de] { display: none; }
+    body.lang-de [data-de] { display: revert; }
+    body.lang-de [data-en] { display: none !important; }
+
+    /* ── NAV ── */
+    .nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.4rem 4rem; background: var(--white);
+      border-bottom: 1px solid var(--warm); position: sticky; top: 0; z-index: 100;
+    }
+    .nav-logo { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 600; font-size: 1.6rem; color: var(--navy); text-decoration: none; }
+    .nav-cats { display: flex; gap: 1.8rem; list-style: none; }
+    .nav-cats a { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid); text-decoration: none; transition: color 0.2s; }
+    .nav-cats a:hover { color: var(--navy); }
+    .nav-right { display: flex; gap: 0.8rem; align-items: center; }
+    .nav-subscribe { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.5rem 1.2rem; background: var(--navy); color: #fff; border: none; cursor: pointer; font-family: 'Jost', sans-serif; transition: background 0.2s; }
+    .nav-subscribe:hover { background: var(--slate); }
+
+    /* ── HERO ── */
+    .hero { display: grid; grid-template-columns: 1fr 1.1fr; min-height: 88vh; }
+    .hero-left { padding: 5rem 4rem 4rem; background: var(--white); border-right: 1px solid var(--warm); display: flex; flex-direction: column; justify-content: center; }
+    .hero-eyebrow { font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--slate); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.8rem; }
+    .hero-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--slate); display: inline-block; }
+    .hero-name { font-family: 'Cormorant Garamond', serif; font-size: 4.8rem; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 0.4rem; font-weight: 400; }
+    .hero-name em { font-style: italic; color: var(--slate); }
+    .hero-tagline { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-style: italic; color: var(--mid); margin-bottom: 2rem; font-weight: 400; }
+    .hero-bio { font-size: 0.95rem; color: var(--mid); line-height: 1.85; font-weight: 300; max-width: 420px; margin-bottom: 2.5rem; }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.75rem 1.8rem; background: var(--navy); color: #fff; border: none; cursor: pointer; font-family: 'Jost', sans-serif; transition: background 0.2s; text-decoration: none; display: inline-block; }
+    .btn-primary:hover { background: var(--slate); }
+    .btn-outline { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.75rem 1.8rem; background: none; color: var(--navy); border: 1px solid var(--warm); cursor: pointer; font-family: 'Jost', sans-serif; transition: all 0.2s; text-decoration: none; display: inline-block; }
+    .btn-outline:hover { border-color: var(--slate); color: var(--slate); }
+    .hero-right { background: var(--light); display: flex; flex-direction: column; padding: 3rem 3rem 3rem 3.5rem; gap: 2rem; justify-content: center; }
+    .hero-card { background: var(--white); border: 1px solid var(--warm); padding: 1.8rem; cursor: pointer; transition: border-color 0.2s, transform 0.2s; position: relative; text-decoration: none; display: block; color: inherit; }
+    .hero-card:hover { border-color: var(--slate); transform: translateY(-2px); }
+    .hero-card.featured { border-left: 3px solid var(--navy); }
+    .card-cat { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--slate); margin-bottom: 0.7rem; }
+    .card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; line-height: 1.3; color: var(--navy); margin-bottom: 0.5rem; font-weight: 600; }
+    .card-excerpt { font-size: 0.84rem; color: var(--mid); line-height: 1.7; font-weight: 300; margin-bottom: 1rem; }
+    .card-meta { font-size: 0.7rem; color: #aaa; letter-spacing: 0.05em; }
+    .new-badge { position: absolute; top: 1.2rem; right: 1.2rem; background: var(--navy); color: #fff; font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.2rem 0.5rem; }
+
+    /* ── CATEGORIES BAR ── */
+    .cats-bar { display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--warm); border-bottom: 1px solid var(--warm); background: var(--white); }
+    .cat-item { padding: 2rem 1.5rem; text-align: center; cursor: pointer; border-right: 1px solid var(--warm); transition: background 0.2s; text-decoration: none; display: flex; flex-direction: column; align-items: center; gap: 0.6rem; color: inherit; }
+    .cat-item:last-child { border-right: none; }
+    .cat-item:hover { background: var(--light); }
+    .cat-icon { font-size: 1.3rem; color: var(--slate); }
+    .cat-name { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--navy); font-weight: 500; }
+    .cat-count { font-size: 0.65rem; color: var(--mid); }
+    .cat-item.active { background: #f0f6ff; border-bottom: 3px solid var(--navy); }
+    .nav-cats a.active { color: var(--navy); font-weight: 600; }
+
+    /* ── ABOUT ME ── */
+    .about-section { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--warm); background: var(--white); }
+    .about-photo-side { border-right: 1px solid var(--warm); display: flex; align-items: center; justify-content: center; padding: 4rem; background: var(--light); }
+    .photo-wrap { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+    .photo-placeholder { width: 260px; height: 340px; background: var(--white); border: 2px dashed var(--warm); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; cursor: pointer; transition: border-color 0.2s; position: relative; }
+    .photo-placeholder:hover { border-color: var(--slate); }
+    .photo-placeholder i { font-size: 2.5rem; color: var(--warm); }
+    .photo-placeholder span { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: #bbb; text-align: center; line-height: 1.7; }
+    #photo-file { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+    #photo-preview { width: 260px; height: 340px; object-fit: cover; border: 1px solid var(--warm); display: none; }
+    .photo-change-btn { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--slate); background: none; border: 1px solid var(--warm); padding: 0.3rem 0.8rem; cursor: pointer; font-family: 'Jost', sans-serif; display: none; transition: all 0.2s; }
+    .photo-change-btn:hover { border-color: var(--slate); }
+    .about-text-side { padding: 4rem; display: flex; flex-direction: column; justify-content: center; }
+    .about-eyebrow { font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--slate); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.8rem; }
+    .about-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--slate); display: inline-block; }
+    .about-title { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; line-height: 1.1; margin-bottom: 1.5rem; font-weight: 600; }
+    .about-title em { font-style: italic; color: var(--slate); }
+    .about-text { font-size: 0.95rem; color: var(--mid); line-height: 1.9; font-weight: 300; margin-bottom: 1rem; }
+    .about-facts { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.5rem; }
+    .about-fact { display: flex; align-items: center; gap: 0.8rem; font-size: 0.84rem; color: var(--mid); font-weight: 300; }
+    .about-fact i { color: var(--slate); font-size: 1rem; }
+
+    /* ── MAIN LAYOUT ── */
+    .main { display: grid; grid-template-columns: 1fr 340px; }
+    .posts-col { padding: 3rem 4rem; border-right: 1px solid var(--warm); }
+    .section-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2rem; padding-bottom: 0.8rem; border-bottom: 2px solid var(--navy); }
+    .section-head-title { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--navy); font-weight: 500; }
+    .section-head-link { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--slate); text-decoration: none; }
+    .section-head-link:hover { color: var(--navy); }
+    .post-item { display: grid; grid-template-columns: 1fr auto; gap: 1.5rem; align-items: start; padding: 1.8rem 0; border-bottom: 1px solid var(--warm); text-decoration: none; color: inherit; }
+    .post-item:hover .post-title { color: var(--slate); }
+    .post-cat { font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--slate); margin-bottom: 0.5rem; }
+    .post-title { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; line-height: 1.25; color: var(--navy); margin-bottom: 0.5rem; font-weight: 600; transition: color 0.2s; }
+    .post-excerpt { font-size: 0.84rem; color: var(--mid); line-height: 1.7; font-weight: 300; }
+    .post-meta { font-size: 0.7rem; color: #aaa; margin-top: 0.8rem; }
+    .post-num { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; color: var(--warm); font-weight: 600; line-height: 1; padding-top: 0.3rem; min-width: 50px; text-align: right; }
+
+    /* ── SIDEBAR ── */
+    .sidebar { padding: 3rem 2.5rem; display: flex; flex-direction: column; gap: 3rem; background: var(--white); }
+    .sidebar-title { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--navy); font-weight: 500; padding-bottom: 0.8rem; border-bottom: 2px solid var(--navy); margin-bottom: 1.5rem; }
+    .ask-intro { font-size: 0.84rem; color: var(--mid); line-height: 1.7; font-weight: 300; margin-bottom: 1rem; }
+    .ask-form { display: flex; flex-direction: column; gap: 0.8rem; }
+    .form-field { background: var(--light); border: 1px solid var(--warm); padding: 0.7rem 1rem; font-size: 0.84rem; color: var(--navy); font-family: 'Jost', sans-serif; outline: none; transition: border-color 0.2s; width: 100%; }
+    .form-field:focus { border-color: var(--slate); }
+    textarea.form-field { resize: vertical; min-height: 90px; }
+    .form-btn { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.7rem 1.2rem; background: var(--navy); color: #fff; border: none; cursor: pointer; font-family: 'Jost', sans-serif; transition: background 0.2s; width: 100%; }
+    .form-btn:hover { background: var(--slate); }
+    .nl-perks { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.2rem; }
+    .nl-perk { font-size: 0.78rem; color: var(--mid); display: flex; align-items: center; gap: 0.5rem; }
+    .nl-perk::before { content: '✦'; font-size: 0.5rem; color: var(--slate); }
+    .nl-note { font-size: 0.68rem; color: #aaa; margin-top: 0.5rem; text-align: center; }
+    .success-msg { display: none; font-size: 0.82rem; color: var(--slate); padding: 0.6rem 1rem; border: 1px solid var(--slate); background: #f0f3f8; text-align: center; }
+
+    /* ── QUOTE ── */
+    .quote-banner { padding: 5rem 4rem; background: var(--navy); text-align: center; border-top: 1px solid var(--warm); }
+    .quote-text { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-style: italic; color: var(--warm); line-height: 1.5; max-width: 650px; margin: 0 auto 1rem; font-weight: 400; }
+    .quote-attr { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--slate); }
+
+    /* ── FOOTER ── */
+    .footer { padding: 2.5rem 4rem; background: var(--white); border-top: 1px solid var(--warm); display: flex; justify-content: space-between; align-items: center; }
+    .footer-logo { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.2rem; color: var(--mid); font-weight: 600; text-decoration: none; }
+    .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+    .footer-links a { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: #aaa; text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--navy); }
+    .footer-copy { font-size: 0.7rem; color: #aaa; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .lang-bar, .nav, .footer { padding-left: 2rem; padding-right: 2rem; }
+      .nav-cats { display: none; }
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-left { padding: 3rem 2rem; border-right: none; border-bottom: 1px solid var(--warm); }
+      .hero-name { font-size: 3rem; }
+      .hero-right { padding: 2rem; }
+      .cats-bar { grid-template-columns: repeat(3, 1fr); }
+      .about-section { grid-template-columns: 1fr; }
+      .about-photo-side { border-right: none; border-bottom: 1px solid var(--warm); padding: 3rem 2rem; }
+      .about-text-side { padding: 3rem 2rem; }
+      .about-title { font-size: 2.2rem; }
+      .main { grid-template-columns: 1fr; }
+      .posts-col { padding: 2rem; border-right: none; }
+      .sidebar { padding: 2rem; border-top: 1px solid var(--warm); }
+      .footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body class="lang-de">
+
+<!-- ══ LANGUAGE BAR ══ -->
+<div class="lang-bar">
+  <span class="lang-label">Sprache / Language</span>
+  <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+  <span class="lang-sep">|</span>
+  <button class="lang-btn active" id="btn-de" onclick="setLang('de')">DE</button>
+</div>
+
+<!-- ══ NAV ══ -->
+<nav class="nav">
+  <a href="blog.html" class="nav-logo">Hanna.</a>
+  <ul class="nav-cats">
+    <li><a href="kategorie-studytips.html"><span data-de>Lerntipps</span><span data-en>Study Tips</span></a></li>
+    <li><a href="kategorie-dailylife.html"><span data-de>Alltag</span><span data-en>Daily Life</span></a></li>
+    <li><a href="kategorie-recommendations.html"><span data-de>Empfehlungen</span><span data-en>Recommendations</span></a></li>
+    <li><a href="kategorie-timemanagement.html"><span data-de>Zeitmanagement</span><span data-en>Time Management</span></a></li>
+    <li><a href="kategorie-creativewriting.html"><span data-de>Kreatives Schreiben</span><span data-en>Creative Writing</span></a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="nav-subscribe" onclick="document.getElementById('newsletter').scrollIntoView({behavior:'smooth'})">Newsletter</button>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">
+      <span data-de>Willkommen in meiner kleinen Welt</span>
+      <span data-en>Welcome to my little corner</span>
+    </div>
+    <h1 class="hero-name">
+      <span data-de>Hallo, ich bin<br><em>Hanna.</em></span>
+      <span data-en>Hi, I'm<br><em>Hanna.</em></span>
+    </h1>
+    <p class="hero-tagline">
+      <span data-de>Schülerin · Schreiberin</span>
+      <span data-en>Student · Writer</span>
+    </p>
+    <p class="hero-bio">
+      <span data-de>Hier teile ich meine Erfahrungen, Tipps und Gedanken — über Lernen, Alltag, Kreativität und alles dazwischen. Ehrlich, persönlich und manchmal etwas chaotisch.</span>
+      <span data-en>Here I share my experiences, tips and thoughts — about studying, everyday life, creativity and everything in between. Honest, personal, and sometimes a little chaotic.</span>
+    </p>
+    <div class="hero-btns">
+      <a href="#posts" class="btn-primary"><span data-de>Meine Beiträge</span><span data-en>Read my posts</span></a>
+      <a href="#about" class="btn-outline"><span data-de>Über mich</span><span data-en>About me</span></a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <!-- ✏️ KARTE 1 – ändere Titel, Text und Datum wenn du einen echten Artikel hast -->
+    <a href="artikel-vorlage.html" class="hero-card featured" data-cat="studytips">
+      <div class="new-badge"><span data-de>Neu</span><span data-en>New</span></div>
+      <div class="card-cat">Study Tips</div>
+      <div class="card-title">
+        <span data-de>Wie mir die Pomodoro-Methode beim Fokussieren geholfen hat</span>
+        <span data-en>How the Pomodoro Method helped me finally focus</span>
+      </div>
+      <div class="card-excerpt">
+        <span data-de>25 Minuten Fokus, 5 Minuten Pause — simpel und doch so wirkungsvoll. Meine ehrliche Erfahrung.</span>
+        <span data-en>25 minutes of focus, 5 minutes of rest — simple yet so effective. My honest experience.</span>
+      </div>
+      <div class="card-meta"><span data-de>12. Mai 2026 · 6 Min.</span><span data-en>May 12, 2026 · 6 min</span></div>
+    </a>
+    <!-- ✏️ KARTE 2 -->
+    <a href="#" class="hero-card" data-cat="creativewriting">
+      <div class="card-cat"><span data-de>Kreatives Schreiben</span><span data-en>Creative Writing</span></div>
+      <div class="card-title">
+        <span data-de>Über das Schreiben als Form der Selbstentdeckung</span>
+        <span data-en>On writing as a form of self-discovery</span>
+      </div>
+      <div class="card-excerpt">
+        <span data-de>Was passiert, wenn man jeden Morgen einfach schreibt — ohne Plan, ohne Ziel.</span>
+        <span data-en>What happens when you just write every morning — no plan, no goal.</span>
+      </div>
+      <div class="card-meta"><span data-de>8. Mai 2026 · 4 Min.</span><span data-en>May 8, 2026 · 4 min</span></div>
+    </a>
+    <!-- ✏️ KARTE 3 -->
+    <a href="#" class="hero-card" data-cat="dailylife">
+      <div class="card-cat"><span data-de>Alltag</span><span data-en>Daily Life</span></div>
+      <div class="card-title">
+        <span data-de>Mein Morgenritual: Warum ich seit 6 Uhr aufstehe</span>
+        <span data-en>My morning ritual: why I've been waking up at 6am</span>
+      </div>
+      <div class="card-excerpt">
+        <span data-de>Nicht aus Disziplin, sondern aus Liebe zur Stille — eine sehr persönliche Routine.</span>
+        <span data-en>Not out of discipline, but out of love for the quiet — a very personal routine.</span>
+      </div>
+      <div class="card-meta"><span data-de>3. Mai 2026 · 3 Min.</span><span data-en>May 3, 2026 · 3 min</span></div>
+    </a>
+    <!-- ✏️ KARTE 4 - BEISPIEL: Neuer Beitrag -->
+    <a href="#" class="hero-card" data-cat="studytips">
+      <div class="card-cat">Study Tips</div>
+      <div class="card-title">
+        <span data-de>Die beste Lernumgebung schaffen</span>
+        <span data-en>Creating the perfect study space</span>
+      </div>
+      <div class="card-excerpt">
+        <span data-de>Kleine Änderungen, die deine Produktivität steigern — vom Licht bis zur Musik.</span>
+        <span data-en>Small changes that boost your productivity — from lighting to sound.</span>
+      </div>
+      <div class="card-meta"><span data-de>5. April 2026 · 5 Min.</span><span data-en>April 5, 2026 · 5 min</span></div>
+    </a>
+  </div>
+</section>
+
+<!-- ══ CATEGORIES BAR ══ -->
+<div class="cats-bar">
+  <a href="kategorie-studytips.html" class="cat-item">
+    <span class="cat-icon"><i class="ti ti-school"></i></span>
+    <span class="cat-name"><span data-de>Lerntipps</span><span data-en>Study Tips</span></span>
+    <span class="cat-count"><span data-de>1 Beitrag</span><span data-en>1 post</span></span>
+  </a>
+  <a href="kategorie-dailylife.html" class="cat-item">
+    <span class="cat-icon"><i class="ti ti-sun"></i></span>
+    <span class="cat-name"><span data-de>Alltag</span><span data-en>Daily Life</span></span>
+    <span class="cat-count"><span data-de>1 Beitrag</span><span data-en>1 post</span></span>
+  </a>
+  <a href="kategorie-recommendations.html" class="cat-item">
+    <span class="cat-icon"><i class="ti ti-heart"></i></span>
+    <span class="cat-name"><span data-de>Empfehlungen</span><span data-en>Recommendations</span></span>
+    <span class="cat-count"><span data-de>1 Beitrag</span><span data-en>1 post</span></span>
+  </a>
+  <a href="kategorie-timemanagement.html" class="cat-item">
+    <span class="cat-icon"><i class="ti ti-clock"></i></span>
+    <span class="cat-name"><span data-de>Zeitmanagement</span><span data-en>Time Management</span></span>
+    <span class="cat-count"><span data-de>1 Beitrag</span><span data-en>1 post</span></span>
+  </a>
+  <a href="kategorie-creativewriting.html" class="cat-item">
+    <span class="cat-icon"><i class="ti ti-pencil"></i></span>
+    <span class="cat-name"><span data-de>Kreatives Schreiben</span><span data-en>Creative Writing</span></span>
+    <span class="cat-count"><span data-de>1 Beitrag</span><span data-en>1 post</span></span>
+  </a>
+</div>
+
+<!-- ══ ABOUT ME ══ -->
+<section class="about-section" id="about">
+  <div class="about-photo-side">
+    <div class="photo-wrap">
+      <img src="hanna.JPG" alt="Hanna" style="width:260px;height:340px;object-fit:cover;border:1px solid var(--warm);" />
+    </div>
+  </div>
+  <div class="about-text-side">
+    <div class="about-eyebrow"><span data-de>Über mich</span><span data-en>About me</span></div>
+    <h2 class="about-title"><span data-de>Hallo, ich bin <em>Hanna.</em></span><span data-en>Hello, I'm <em>Hanna.</em></span></h2>
+
+    
+    <!-- ✏️ DEIN ABOUT-ME TEXT -->
+    <p class="about-text">
+      <span data-de>Herzlich Willkommen zu meinem Blog! Ich bin Hanna und teile hier meine Erfahrungen, Tipps und Gedanken. Ich wurde in Deutschland geboren und bin in Hessen aufgewachsen, meine Wurzeln kommen ursprünglich aus China. Ich freue mich, wenn du dich hier wohl fühlst und ein paar Inspirationen findest.</span>
+      <span data-en>Welcome to my blog! I'm Hanna and I share my experiences, tips and thoughts here. I was born in Germany and grew up in Hesse, with my roots originally coming from China. I hope you feel at home here and find a little inspiration.</span>
+    </p>
+    <p class="about-text">
+      <span data-de>Hier findest du ehrliche Gedanken über den Schulalltag, Lerntipps die wirklich funktionieren, kreative Schreibexperimente und kleine Alltagsmomente, die es wert sind, festgehalten zu werden.</span>
+      <span data-en>Here you'll find honest reflections on school life, study tips that actually work, creative writing experiments, and small everyday moments worth remembering.</span>
+    </p>
+    <div class="about-facts">
+      <div class="about-fact"><i class="ti ti-map-pin"></i><span data-de>Hessen, Deutschland</span><span data-en>Hesse, Germany</span></div>
+      <div class="about-fact"><i class="ti ti-school"></i><span data-de>Schülerin</span><span data-en>Student</span></div>
+      <div class="about-fact"><i class="ti ti-heart"></i><span data-de>Schreiben · Lesen · Entdecken</span><span data-en>Writing · Reading · Exploring</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ POSTS + SIDEBAR ══ -->
+<div class="main">
+  <div class="posts-col" id="posts">
+    <div class="section-head">
+      <span class="section-head-title"><span data-de>Aktuelle Beiträge</span><span data-en>Latest Posts</span></span>
+      <a href="#" class="section-head-link"><span data-de>Alle ansehen →</span><span data-en>See all →</span></a>
+    </div>
+    <!-- ✏️ BEITRÄGE – kopiere einen Block um neue hinzuzufügen -->
+    <a href="artikel-vorlage.html" class="post-item" data-cat="studytips">
+      <div>
+        <div class="post-cat">Study Tips</div>
+        <div class="post-title"><span data-de>Wie mir die Pomodoro-Methode geholfen hat</span><span data-en>How the Pomodoro Method helped me focus</span></div>
+        <div class="post-excerpt"><span data-de>25 Minuten Fokus, 5 Minuten Pause — meine ehrliche Erfahrung nach 3 Monaten.</span><span data-en>25 minutes of focus, 5 minutes rest — my honest experience after 3 months.</span></div>
+        <div class="post-meta"><span data-de>12. Mai 2026 · 6 Min.</span><span data-en>May 12, 2026 · 6 min</span></div>
+      </div>
+      <div class="post-num">01</div>
+    </a>
+    <a href="#" class="post-item" data-cat="timemanagement">
+      <div>
+        <div class="post-cat"><span data-de>Zeitmanagement</span><span data-en>Time Management</span></div>
+        <div class="post-title"><span data-de>Warum To-do-Listen nicht reichen</span><span data-en>Why to-do lists aren't enough</span></div>
+        <div class="post-excerpt"><span data-de>Ein System aus Prioritäten und Energie-Blöcken, das meinen Alltag verändert hat.</span><span data-en>A system built around priorities and energy blocks that changed my daily life.</span></div>
+        <div class="post-meta"><span data-de>10. Mai 2026 · 7 Min.</span><span data-en>May 10, 2026 · 7 min</span></div>
+      </div>
+      <div class="post-num">02</div>
+    </a>
+    <a href="#" class="post-item" data-cat="recommendations">
+      <div>
+        <div class="post-cat"><span data-de>Empfehlungen</span><span data-en>Recommendations</span></div>
+        <div class="post-title"><span data-de>5 Bücher, die meine Perspektive verändert haben</span><span data-en>5 books that changed the way I see things</span></div>
+        <div class="post-excerpt"><span data-de>Keine Klassiker-Liste — nur Bücher, die mich wirklich überrascht haben.</span><span data-en>Not a classics list — just books that genuinely surprised me.</span></div>
+        <div class="post-meta"><span data-de>7. Mai 2026 · 5 Min.</span><span data-en>May 7, 2026 · 5 min</span></div>
+      </div>
+      <div class="post-num">03</div>
+    </a>
+    <a href="#" class="post-item" data-cat="dailylife">
+      <div>
+        <div class="post-cat"><span data-de>Alltag</span><span data-en>Daily Life</span></div>
+        <div class="post-title"><span data-de>Digitales Aufräumen: Was ich beim Social-Media-Fasten gelernt habe</span><span data-en>Digital declutter: what I learned from quitting social media</span></div>
+        <div class="post-excerpt"><span data-de>Zwei Wochen ohne Instagram und TikTok — was ich dabei über mich gelernt habe.</span><span data-en>Two weeks without Instagram and TikTok — what I discovered about myself.</span></div>
+        <div class="post-meta"><span data-de>25. April 2026 · 5 Min.</span><span data-en>April 25, 2026 · 5 min</span></div>
+      </div>
+      <div class="post-num">04</div>
+    </a>
+    <a href="#" class="post-item" data-cat="creativewriting">
+      <div>
+        <div class="post-cat"><span data-de>Kreatives Schreiben</span><span data-en>Creative Writing</span></div>
+        <div class="post-title"><span data-de>Ein Brief an mein jüngeres Ich</span><span data-en>A letter to my younger self</span></div>
+        <div class="post-excerpt"><span data-de>Was würde ich mir selbst sagen, wenn ich zurückgehen könnte?</span><span data-en>What would I tell myself if I could go back?</span></div>
+        <div class="post-meta"><span data-de>18. April 2026 · 4 Min.</span><span data-en>April 18, 2026 · 4 min</span></div>
+      </div>
+      <div class="post-num">05</div>
+    </a>
+    <a href="#" class="post-item" data-cat="studytips">
+      <div>
+        <div class="post-cat">Study Tips</div>
+        <div class="post-title"><span data-de>Die beste Lernumgebung schaffen</span><span data-en>Creating the perfect study space</span></div>
+        <div class="post-excerpt"><span data-de>Kleine Änderungen im Zimmer, die dich produktiver machen — vom Licht bis zur Musik.</span><span data-en>Small room adjustments that boost productivity — from lighting to sound.</span></div>
+        <div class="post-meta"><span data-de>5. April 2026 · 5 Min.</span><span data-en>April 5, 2026 · 5 min</span></div>
+      </div>
+      <div class="post-num">06</div>
+    </a>
+  </div>
+
+
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <!-- FRAGEN -->
+    <div id="ask">
+      <div class="sidebar-title"><span data-de>Stell mir eine Frage</span><span data-en>Ask me anything</span></div>
+      <p class="ask-intro"><span data-de>Hast du eine Frage an mich — über Schule, Schreiben, Alltag oder einfach so? Ich freue mich über jede Nachricht!</span><span data-en>Got a question — about school, writing, daily life or anything else? I'd love to hear from you!</span></p>
+      <form class="ask-form" name="ask-form" id="ask-form" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="sendQ(event)">
+        <input type="hidden" name="form-name" value="ask-form" />
+        <p style="display:none;">
+          <label>Don’t fill this out if you’re human: <input name="bot-field" /></label>
+        </p>
+        <input class="form-field" type="text" id="ask-name" name="name" placeholder="Dein Name / Your name (optional)" />
+        <textarea class="form-field" id="ask-q" name="question" placeholder="Deine Frage / Your question..."></textarea>
+        <div class="success-msg" id="ask-ok"><span data-de>Danke! Ich melde mich bald. ✦</span><span data-en>Thanks! I'll get back to you soon. ✦</span></div>
+        <button class="form-btn" type="submit"><span data-de>Frage senden →</span><span data-en>Send question →</span></button>
+      </form>
+    </div>
+    <!-- NEWSLETTER -->
+    <div id="newsletter">
+      <div class="sidebar-title">Newsletter</div>
+      <p class="ask-intro"><span data-de>Alle zwei Wochen: neue Beiträge und Gedanken direkt in dein Postfach.</span><span data-en>Every two weeks: new posts and thoughts straight to your inbox.</span></p>
+      <div class="nl-perks">
+        <div class="nl-perk"><span data-de>Neue Beiträge als Erste lesen</span><span data-en>Be first to read new posts</span></div>
+        <div class="nl-perk"><span data-de>Exklusive Einblicke hinter die Kulissen</span><span data-en>Exclusive behind-the-scenes</span></div>
+        <div class="nl-perk"><span data-de>Kein Spam, jederzeit abmeldbar</span><span data-en>No spam, unsubscribe anytime</span></div>
+      </div>
+      <form class="ask-form" name="newsletter" id="newsletter-form" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="subscribe(event)">
+        <input type="hidden" name="form-name" value="newsletter" />
+        <p style="display:none;">
+          <label>Don’t fill this out if you’re human: <input name="bot-field" /></label>
+        </p>
+        <input class="form-field" type="text" id="nl-name" name="name" placeholder="Dein Name / Your name (optional)" />
+        <input class="form-field" type="email" id="nl-email" name="email" placeholder="deine@email.de / your@email.com" required />
+      </form>
+      <div class="success-msg" id="nl-ok"><span data-de>Willkommen an Bord! ✦</span><span data-en>Welcome aboard! ✦</span></div>
+      <button class="form-btn" type="submit" form="newsletter-form"><span data-de>Jetzt anmelden →</span><span data-en>Subscribe →</span></button>
+      <div class="nl-note"><span data-de>Bereits über 800 Leser dabei ✦</span><span data-en>Over 800 readers already ✦</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ QUOTE ══ -->
+<div class="quote-banner">
+  <div class="quote-text">
+    <span data-de>„Das Schreiben ist der Weg, auf dem ich mich selbst am besten kennenlernen darf."</span>
+    <span data-en>"Writing is the path on which I get to know myself best."</span>
+  </div>
+  <div class="quote-attr">— Hanna</div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer class="footer">
+  <a href="blog.html" class="footer-logo">Hanna.</a>
+  <ul class="footer-links">
+    <li><a href="#about"><span data-de>Über mich</span><span data-en>About</span></a></li>
+    <li><a href="kontakt.html"><span data-de>Kontakt</span><span data-en>Contact</span></a></li>
+    <li><a href="impressum.html">Impressum</a></li>
+    <li><a href="datenschutz.html"><span data-de>Datenschutz</span><span data-en>Privacy</span></a></li>
+  </ul>
+  <div class="footer-copy">© 2026 Hanna · <span data-de>mit Liebe gemacht</span><span data-en>made with love</span></div>
+</footer>
+
+<script>
+  // ── SPRACHE UMSCHALTEN ──
+  function setLang(l) {
+    document.body.classList.toggle('lang-de', l === 'de');
+    document.documentElement.lang = l;
+    document.getElementById('btn-de').classList.toggle('active', l === 'de');
+    document.getElementById('btn-en').classList.toggle('active', l === 'en');
+    localStorage.setItem('hanna-lang', l);
+  }
+  const saved = localStorage.getItem('hanna-lang');
+  if (saved) setLang(saved);
+
+  // ── FOTO VORSCHAU ──
+  function previewPhoto(e) {
+    const f = e.target.files[0]; if (!f) return;
+    const r = new FileReader();
+    r.onload = ev => {
+      document.getElementById('photo-preview').src = ev.target.result;
+      document.getElementById('photo-preview').style.display = 'block';
+      document.querySelector('.photo-placeholder').style.display = 'none';
+      document.getElementById('photo-change-btn').style.display = 'inline-block';
+    };
+    r.readAsDataURL(f);
+  }
+
+  // ── FRAGE SENDEN ──
+  async function postNetlifyForm(form) {
+    const body = new URLSearchParams(new FormData(form)).toString();
+    const response = await fetch(window.location.pathname, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body
+    });
+    if (!response.ok) throw new Error('Form submission failed');
+  }
+
+  async function sendQ(event) {
+    event.preventDefault();
+    if (!document.getElementById('ask-q').value.trim()) {
+      alert(document.body.classList.contains('lang-de') ? 'Bitte schreibe eine Frage.' : 'Please write a question first.'); return;
+    }
+    try {
+      await postNetlifyForm(document.getElementById('ask-form'));
+      document.getElementById('ask-ok').style.display = 'block';
+      document.getElementById('ask-name').value = '';
+      document.getElementById('ask-q').value = '';
+    } catch (error) {
+      alert(document.body.classList.contains('lang-de') ? 'Senden fehlgeschlagen. Bitte später erneut versuchen.' : 'Sending failed. Please try again later.');
+    }
+  }
+
+  // ── NEWSLETTER ──
+  async function subscribe(event) {
+    event.preventDefault();
+    const e = document.getElementById('nl-email').value.trim();
+    if (!e || !e.includes('@')) {
+      alert(document.body.classList.contains('lang-de') ? 'Bitte gültige E-Mail eingeben.' : 'Please enter a valid email.'); return;
+    }
+    try {
+      await postNetlifyForm(document.getElementById('newsletter-form'));
+      document.getElementById('nl-ok').style.display = 'block';
+      document.getElementById('nl-name').value = '';
+      document.getElementById('nl-email').value = '';
+    } catch (error) {
+      alert(document.body.classList.contains('lang-de') ? 'Anmeldung fehlgeschlagen. Bitte später erneut versuchen.' : 'Subscription failed. Please try again later.');
+    }
+  }
+
+  // ── LOAD DEFAULT PHOTO IF PRESENT ──
+  (function () {
+    const test = new Image();
+    test.onload = function () {
+      const prev = document.getElementById('photo-preview');
+      if (prev) {
+        prev.src = 'hanna.JPG';
+        prev.style.display = 'block';
+      }
+      const ph = document.querySelector('.photo-placeholder'); if (ph) ph.style.display = 'none';
+      const btn = document.getElementById('photo-change-btn'); if (btn) btn.style.display = 'inline-block';
+    };
+    test.onerror = function () { /* no default photo found */ };
+    test.src = 'hanna.JPG';
+  })();
+
+  // KATEGORIEN: Links führen zu separaten Kategorie-Seiten (kein In-Page-Filter)
+</script>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Impressum | Hanna's Blog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    :root { --navy: #2F3A55; --slate: #5C6B8A; --mid: #6E6F73; --warm: #e7e2de; --light: #F5F6F3; --white: #ffffff; }
+    body { font-family: 'Jost', sans-serif; background: var(--light); color: var(--navy); line-height: 1.6; }
+    .lang-bar { background: var(--navy); display: flex; justify-content: flex-end; align-items: center; padding: 0.45rem 4rem; gap: 0.4rem; }
+    .lang-label { font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-right: 0.5rem; }
+    .lang-btn { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.22rem 0.65rem; border: 1px solid transparent; background: none; color: rgba(255,255,255,0.45); cursor: pointer; font-family: 'Jost', sans-serif; transition: all 0.2s; }
+    .lang-btn.active { background: rgba(255,255,255,0.15); color: #fff; border-color: rgba(255,255,255,0.3); }
+    .lang-btn:hover { color: #fff; }
+    .lang-sep { color: rgba(255,255,255,0.2); font-size: 0.7rem; }
+    [data-de] { display: none; }
+    body.lang-de [data-de] { display: revert; }
+    body.lang-de [data-en] { display: none !important; }
+    .nav { display: flex; justify-content: space-between; align-items: center; padding: 1.4rem 4rem; background: var(--white); border-bottom: 1px solid var(--warm); position: sticky; top: 0; z-index: 100; }
+    .nav-logo { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 600; font-size: 1.6rem; color: var(--navy); text-decoration: none; }
+    .nav-link { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); text-decoration: none; }
+    .nav-link:hover { color: var(--navy); }
+    .nav-right { display: flex; gap: 0.8rem; align-items: center; }
+    .nav-subscribe { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.5rem 1.2rem; background: var(--navy); color: #fff; border: none; cursor: pointer; font-family: 'Jost', sans-serif; transition: background 0.2s; }
+    .nav-subscribe:hover { background: var(--slate); }
+    .page-hero { padding: 4.5rem 4rem 3.5rem; background: linear-gradient(180deg, #fff 0%, #fbfaf8 100%); border-bottom: 1px solid var(--warm); }
+    .page-eyebrow { font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--slate); margin-bottom: 1.1rem; display: flex; align-items: center; gap: 0.8rem; }
+    .page-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--slate); display: inline-block; }
+    .page-title { font-family: 'Cormorant Garamond', serif; font-size: 4rem; line-height: 1.05; letter-spacing: -0.02em; font-weight: 400; margin-bottom: 1rem; }
+    .page-title em { font-style: italic; color: var(--slate); }
+    .content-wrapper { padding: 3rem 4rem; background: var(--white); max-width: 900px; margin: 0 auto; }
+    .content-section { margin-bottom: 2.5rem; }
+    .content-section h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 600; color: var(--navy); margin-bottom: 1rem; margin-top: 2rem; }
+    .content-section h2:first-child { margin-top: 0; }
+    .content-section p { font-size: 0.95rem; color: var(--mid); line-height: 1.85; margin-bottom: 1rem; font-weight: 300; }
+    .content-section ul { margin-left: 1.5rem; font-size: 0.95rem; color: var(--mid); line-height: 1.85; font-weight: 300; }
+    .content-section li { margin-bottom: 0.6rem; }
+    .footer { padding: 2.5rem 4rem; background: var(--white); border-top: 1px solid var(--warm); display: flex; justify-content: space-between; align-items: center; }
+    .footer-logo { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.2rem; color: var(--mid); font-weight: 600; text-decoration: none; }
+    .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+    .footer-links a { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: #aaa; text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--navy); }
+    .footer-copy { font-size: 0.7rem; color: #aaa; }
+    @media (max-width: 1024px) {
+      .lang-bar, .nav, .footer, .page-hero { padding-left: 2rem; padding-right: 2rem; }
+      .content-wrapper { padding: 2rem; }
+      .page-title { font-size: 3rem; }
+      .footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body class="lang-de">
+<div class="lang-bar">
+  <span class="lang-label">Sprache / Language</span>
+  <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+  <span class="lang-sep">|</span>
+  <button class="lang-btn active" id="btn-de" onclick="setLang('de')">DE</button>
+</div>
+
+<nav class="nav">
+  <a href="blog.html" class="nav-logo">Hanna.</a>
+  <a href="blog.html#posts" class="nav-link"><span data-de>Zurück zum Blog</span><span data-en>Back to blog</span></a>
+  <div class="nav-right">
+    <button class="nav-subscribe" onclick="navigate('blog.html#newsletter')">Newsletter</button>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="page-eyebrow"><span data-de>Rechtliches</span><span data-en>Legal</span></div>
+  <h1 class="page-title">Impressum</h1>
+</section>
+
+<div class="content-wrapper">
+  <div class="content-section">
+    <h2><span data-de>Angaben gemäß § 5 TMG</span><span data-en>Information according to § 5 TMG</span></h2>
+    
+    <h3 style="font-size: 1.2rem; font-weight: 600; color: var(--navy); margin-top: 1rem; margin-bottom: 0.8rem;">
+      <span data-de>Verantwortlich für den Inhalt:</span>
+      <span data-en>Responsible for content:</span>
+    </h3>
+    <p>
+      <span data-de>Hanna [Nachname]<br>
+      [Straße und Hausnummer]<br>
+      [Postleitzahl] [Stadt]<br>
+      Deutschland</span>
+      <span data-en>Hanna [Last Name]<br>
+      [Street and house number]<br>
+      [Postal code] [City]<br>
+      Germany</span>
+    </p>
+
+    <h3 style="font-size: 1.2rem; font-weight: 600; color: var(--navy); margin-top: 1rem; margin-bottom: 0.8rem;">
+      <span data-de>Kontaktdaten:</span>
+      <span data-en>Contact information:</span>
+    </h3>
+    <p>
+      <span data-de>E-Mail: [Ihre E-Mail-Adresse]<br>
+      Telefon: [Ihre Telefonnummer (optional)]</span>
+      <span data-en>Email: [Your email address]<br>
+      Phone: [Your phone number (optional)]</span>
+    </p>
+  </div>
+
+  <div class="content-section">
+    <h2><span data-de>Urheber- und Leistungsschutzrechte</span><span data-en>Copyright and Performance Rights</span></h2>
+    <p>
+      <span data-de>Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des Autors oder Erstellers.</span>
+      <span data-en>The content and works created by the site operators are subject to German copyright law. The reproduction, editing, distribution and any kind of use outside the scope of copyright law requires the written consent of the author or creator.</span>
+    </p>
+  </div>
+
+  <div class="content-section">
+    <h2><span data-de>Haftung für Inhalte</span><span data-en>Liability for Content</span></h2>
+    <p>
+      <span data-de>Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.</span>
+      <span data-en>The content on our pages has been created with the greatest care. However, we cannot guarantee the accuracy, completeness and timeliness of the content. As service providers, we are responsible for our own content on these pages in accordance with general laws. However, according to §§ 8 to 10 TMG, we are not obligated as service providers to monitor transmitted or stored third-party information or to investigate circumstances that indicate illegal activity.</span>
+    </p>
+  </div>
+
+  <div class="content-section">
+    <h2><span data-de>Haftung für Links</span><span data-en>Liability for Links</span></h2>
+    <p>
+      <span data-de>Unsere Website enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar.</span>
+      <span data-en>Our website contains links to external websites of third parties over whose content we have no influence. Therefore, we cannot assume any liability for this third-party content. The respective provider or operator of the pages is always responsible for the content of the linked pages. The linked pages were checked for possible legal violations at the time of linking. Illegal content was not recognizable at the time of linking.</span>
+    </p>
+  </div>
+
+  <div class="content-section">
+    <h2><span data-de>Urheberrechte Dritter</span><span data-en>Third Party Copyrights</span></h2>
+    <p>
+      <span data-de>Die Inhalte dieser Website sind urheberrechtlich geschützt. Alle grafischen Elemente, Texte, Artikel und sonstige Werke auf diesen Seiten sind Werke der Website-Betreiber oder unterliegen den Lizenzbedingungen oder sind proprietary.</span>
+      <span data-en>The contents of this website are protected by copyright. All graphic elements, texts, articles and other works on these pages are works of the website operator or are subject to license terms or are proprietary.</span>
+    </p>
+  </div>
+
+  <div class="content-section">
+    <h2><span data-de>Erklärung zur Barrierefreiheit</span><span data-en>Accessibility Statement</span></h2>
+    <p>
+      <span data-de>Ich bemühe mich, diese Website für alle Nutzer zugänglich zu machen. Falls Sie Barrierefreiheitsprobleme erleben, kontaktieren Sie mich bitte unter den oben angegebenen Kontaktdaten.</span>
+      <span data-en>I strive to make this website accessible to all users. If you experience accessibility issues, please contact me using the contact information provided above.</span>
+    </p>
+  </div>
+
+  <div class="content-section">
+    <h2><span data-de>Haftungsausschluss</span><span data-en>Disclaimer</span></h2>
+    <p>
+      <span data-de>Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich. Sollten Sie Rechtsverletzungen bemerken, informieren Sie mich bitte.</span>
+      <span data-en>Despite careful content control, we assume no liability for the contents of external links. The operators of the linked pages are solely responsible for their content. If you notice any legal violations, please inform me.</span>
+    </p>
+  </div>
+
+  <div class="content-section">
+    <h2><span data-de>Kontakt</span><span data-en>Contact</span></h2>
+    <p>
+      <span data-de>Bei Fragen zum Impressum oder zur Website kontaktieren Sie mich bitte unter:</span>
+      <span data-en>If you have any questions about the imprint or the website, please contact me at:</span>
+    </p>
+    <p>
+      <span data-de>E-Mail: [Ihre E-Mail-Adresse]</span>
+      <span data-en>Email: [Your email address]</span>
+    </p>
+  </div>
+</div>
+
+<footer class="footer">
+  <a href="blog.html" class="footer-logo">Hanna.</a>
+  <ul class="footer-links">
+    <li><a href="blog.html#about"><span data-de>Über mich</span><span data-en>About</span></a></li>
+    <li><a href="kontakt.html"><span data-de>Kontakt</span><span data-en>Contact</span></a></li>
+    <li><a href="impressum.html">Impressum</a></li>
+    <li><a href="datenschutz.html"><span data-de>Datenschutz</span><span data-en>Privacy</span></a></li>
+  </ul>
+  <div class="footer-copy">© 2026 Hanna · <span data-de>mit Liebe gemacht</span><span data-en>made with love</span></div>
+</footer>
+
+<script>
+  function setLang(l) {
+    document.body.classList.toggle('lang-de', l === 'de');
+    document.documentElement.lang = l;
+    document.getElementById('btn-de').classList.toggle('active', l === 'de');
+    document.getElementById('btn-en').classList.toggle('active', l === 'en');
+    localStorage.setItem('lang', l);
+  }
+
+  // Load saved language on page load
+  const saved = localStorage.getItem('lang') || 'de';
+  setLang(saved);
+
+  function navigate(url) {
+    window.location.href = url;
+  }
+</script>
+</body>
+</html>
