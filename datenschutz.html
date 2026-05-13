@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Datenschutz | Hanna's Blog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    :root { --navy: #2F3A55; --slate: #5C6B8A; --mid: #6E6F73; --warm: #e7e2de; --light: #F5F6F3; --white: #ffffff; }
+    body { font-family: 'Jost', sans-serif; background: var(--light); color: var(--navy); line-height: 1.6; }
+    .lang-bar { background: var(--navy); display: flex; justify-content: flex-end; align-items: center; padding: 0.45rem 4rem; gap: 0.4rem; }
+    .lang-label { font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-right: 0.5rem; }
+    .lang-btn { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.22rem 0.65rem; border: 1px solid transparent; background: none; color: rgba(255,255,255,0.45); cursor: pointer; font-family: 'Jost', sans-serif; transition: all 0.2s; }
+    .lang-btn.active { background: rgba(255,255,255,0.15); color: #fff; border-color: rgba(255,255,255,0.3); }
+    .lang-btn:hover { color: #fff; }
+    .lang-sep { color: rgba(255,255,255,0.2); font-size: 0.7rem; }
+    [data-de] { display: none; }
+    body.lang-de [data-de] { display: revert; }
+    body.lang-de [data-en] { display: none !important; }
+    .nav { display: flex; justify-content: space-between; align-items: center; padding: 1.4rem 4rem; background: var(--white); border-bottom: 1px solid var(--warm); position: sticky; top: 0; z-index: 100; }
+    .nav-logo { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 600; font-size: 1.6rem; color: var(--navy); text-decoration: none; }
+    .nav-link { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); text-decoration: none; }
+    .nav-link:hover { color: var(--navy); }
+    .nav-right { display: flex; gap: 0.8rem; align-items: center; }
+    .nav-subscribe { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.5rem 1.2rem; background: var(--navy); color: #fff; border: none; cursor: pointer; font-family: 'Jost', sans-serif; transition: background 0.2s; }
+    .nav-subscribe:hover { background: var(--slate); }
+    .page-hero { padding: 4.5rem 4rem 3.5rem; background: linear-gradient(180deg, #fff 0%, #fbfaf8 100%); border-bottom: 1px solid var(--warm); }
+    .page-eyebrow { font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--slate); margin-bottom: 1.1rem; display: flex; align-items: center; gap: 0.8rem; }
+    .page-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--slate); display: inline-block; }
+    .page-title { font-family: 'Cormorant Garamond', serif; font-size: 4rem; line-height: 1.05; letter-spacing: -0.02em; font-weight: 400; margin-bottom: 1rem; }
+    .page-title em { font-style: italic; color: var(--slate); }
+    .content-wrapper { padding: 3rem 4rem; background: var(--white); max-width: 900px; margin: 0 auto; }
+    .content-section { margin-bottom: 2.5rem; }
+    .content-section h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 600; color: var(--navy); margin-bottom: 1rem; margin-top: 2rem; }
+    .content-section h2:first-child { margin-top: 0; }
+    .content-section p { font-size: 0.95rem; color: var(--mid); line-height: 1.85; margin-bottom: 1rem; font-weight: 300; }
+    .content-section ul { margin-left: 1.5rem; font-size: 0.95rem; color: var(--mid); line-height: 1.85; font-weight: 300; }
+    .content-section li { margin-bottom: 0.6rem; }
+    .footer { padding: 2.5rem 4rem; background: var(--white); border-top: 1px solid var(--warm); display: flex; justify-content: space-between; align-items: center; }
+    .footer-logo { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.2rem; color: var(--mid); font-weight: 600; text-decoration: none; }
+    .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+    .footer-links a { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: #aaa; text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--navy); }
+    .footer-copy { font-size: 0.7rem; color: #aaa; }
+    @media (max-width: 1024px) {
+      .lang-bar, .nav, .footer, .page-hero { padding-left: 2rem; padding-right: 2rem; }
+      .content-wrapper { padding: 2rem; }
+      .page-title { font-size: 3rem; }
+      .footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body class="lang-de">
+<div class="lang-bar">
+  <span class="lang-label">Sprache / Language</span>
+  <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+  <span class="lang-sep">|</span>
+  <button class="lang-btn active" id="btn-de" onclick="setLang('de')">DE</button>
+</div>
+
+<nav class="nav">
+  <a href="blog.html" class="nav-logo">Hanna.</a>
+  <a href="blog.html#posts" class="nav-link"><span data-de>Zurück zum Blog</span><span data-en>Back to blog</span></a>
+  <div class="nav-right">
+    <button class="nav-subscribe" onclick="navigate('blog.html#newsletter')">Newsletter</button>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="page-eyebrow"><span data-de>Rechtliches</span><span data-en>Legal</span></div>
+  <h1 class="page-title"><span data-de>Datenschutz</span><span data-en>Privacy Policy</span></h1>
+</section>
+
+<div class="content-wrapper">
+  <div class="content-section">
+    <h2><span data-de>1. Verantwortlicher</span><span data-en>1. Responsible Party</span></h2>
+    <p>
+      <span data-de>Hanna [Nachname]<br>
+      [Adresse]<br>
+      [E-Mail]</span>
+      <span data-en>Hanna [Last Name]<br>
+      [Address]<br>
+      [Email]</span>
+    </p>
+  </div>
+
+  <div class="content-section">
+    <h2><span data-de>2. Datenschutz auf einen Blick</span><span data-en>2. Data Protection at a Glance</span></h2>
+    <p>
+      <span data-de>Diese Website erhebt und verarbeitet personenbezogene Daten. Die Verarbeitung erfolgt auf Basis von Ihre Einwilligung und berechtigten Interessen.</span>
+      <span data-en>This website collects and processes personal data. Processing is carried out on the basis of your consent and legitimate interests.</span>
+    </p>
+  </div>
+
+  <div class="content-section">
+    <h2><span data-de>3. Allgemeine Hinweise</span><span data-en>3. General Information</span></h2>
+    <p>
+      <span data-de>Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können.</span>
+      <span data-en>The following information provides a simple overview of what happens to your personal data when you visit this website. Personal data is any information that can be used to personally identify you.</span>
+    </p>
+  </div>
+
+  <div class="content-section">
+    <h2><span data-de>4. Datenerfassung auf dieser Website</span><span data-en>4. Data Collection on This Website</span></h2>
+    
+    <h3 style="font-size: 1.2rem; font-weight: 600; color: var(--navy); margin-top: 1.5rem; margin-bottom: 0.8rem;">
+      <span data-de>Wer ist verantwortlich für die Datenerfassung?</span>
+      <span data-en>Who is responsible for data collection?</span>
+    </h3>
+    <p>
+      <span data-de>Die Datenverarbeitung auf dieser Website erfolgt durch den Websiteinhaber. Dessen Kontaktdaten können Sie dem Impressum dieser Website entnehmen.</span>
+      <span data-en>Data processing on this website is carried out by the website owner. You can find their contact details in the imprint of this website.</span>
+    </p>
+
+    <h3 style="font-size: 1.2rem; font-weight: 600; color: var(--navy); margin-top: 1.5rem; margin-bottom: 0.8rem;">
+      <span data-de>Wie erfassen wir Ihre Daten?</span>
+      <span data-en>How do we collect your data?</span>
+    </h3>
+    <p>
+      <span data-de>Ihre Daten werden zum einen dadurch erhoben, dass Sie uns diese mitteilen. Hierzu zählen z.B. Daten, die Sie in Kontaktformulare oder Newsletter-Anmeldungen eingeben.</span>
+      <span data-en>Your data is collected, in part, when you provide it to us. This includes data you enter into contact forms or newsletter subscriptions.</span>
+    </p>
+  </div>
+
+  <div class="content-section">
+    <h2><span data-de>5. Kontaktformular</span><span data-en>5. Contact Form</span></h2>
+    <p>
+      <span data-de>Wenn Sie uns über das Kontaktformular Nachrichten zukommen lassen, werden Ihre Angaben aus dem Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert.</span>
+      <span data-en>If you send us messages through the contact form, your information from the request form, including the contact data you provide there, will be stored with us for the purpose of processing the request and in case of follow-up questions.</span>
+    </p>
+  </div>
+
+  <div class="content-section">
+    <h2><span data-de>6. Newsletter</span><span data-en>6. Newsletter</span></h2>
+    <p>
+      <span data-de>Wenn Sie sich für unseren Newsletter anmelden, werden Ihre E-Mail-Adresse und eventuell weitere von Ihnen angegebene Daten zur Versendung des Newsletters verwendet.</span>
+      <span data-en>When you sign up for our newsletter, your email address and any other data you provide will be used to send the newsletter.</span>
+    </p>
+  </div>
+
+  <div class="content-section">
+    <h2><span data-de>7. Ihre Rechte</span><span data-en>7. Your Rights</span></h2>
+    <p>
+      <span data-de>Sie haben das Recht:</span>
+      <span data-en>You have the right to:</span>
+    </p>
+    <ul>
+      <li><span data-de>Auskunft über Ihre gespeicherten Daten zu erhalten</span><span data-en>Request information about your stored data</span></li>
+      <li><span data-de>Ihre Daten korrigieren zu lassen</span><span data-en>Have your data corrected</span></li>
+      <li><span data-de>Ihre Daten löschen zu lassen</span><span data-en>Have your data deleted</span></li>
+      <li><span data-de>Der Verarbeitung Ihrer Daten zu widersprechen</span><span data-en>Object to the processing of your data</span></li>
+    </ul>
+  </div>
+
+  <div class="content-section">
+    <h2><span data-de>8. Kontakt</span><span data-en>8. Contact</span></h2>
+    <p>
+      <span data-de>Wenn Sie Fragen zum Datenschutz haben, kontaktieren Sie uns bitte unter:</span>
+      <span data-en>If you have any questions about data protection, please contact us at:</span>
+    </p>
+    <p>
+      <span data-de>E-Mail: [Ihre E-Mail-Adresse]</span>
+      <span data-en>Email: [Your email address]</span>
+    </p>
+  </div>
+</div>
+
+<footer class="footer">
+  <a href="blog.html" class="footer-logo">Hanna.</a>
+  <ul class="footer-links">
+    <li><a href="blog.html#about"><span data-de>Über mich</span><span data-en>About</span></a></li>
+    <li><a href="kontakt.html"><span data-de>Kontakt</span><span data-en>Contact</span></a></li>
+    <li><a href="impressum.html">Impressum</a></li>
+    <li><a href="datenschutz.html"><span data-de>Datenschutz</span><span data-en>Privacy</span></a></li>
+  </ul>
+  <div class="footer-copy">© 2026 Hanna · <span data-de>mit Liebe gemacht</span><span data-en>made with love</span></div>
+</footer>
+
+<script>
+  function setLang(l) {
+    document.body.classList.toggle('lang-de', l === 'de');
+    document.documentElement.lang = l;
+    document.getElementById('btn-de').classList.toggle('active', l === 'de');
+    document.getElementById('btn-en').classList.toggle('active', l === 'en');
+    localStorage.setItem('lang', l);
+  }
+
+  // Load saved language on page load
+  const saved = localStorage.getItem('lang') || 'de';
+  setLang(saved);
+
+  function navigate(url) {
+    window.location.href = url;
+  }
+</script>
+</body>
+</html>
