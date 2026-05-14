@@ -408,12 +408,10 @@
     <div id="ask">
       <div class="sidebar-title"><span data-de>Stell mir eine Frage</span><span data-en>Ask me anything</span></div>
       <p class="ask-intro"><span data-de>Hast du eine Frage an mich — über Schule, Schreiben, Alltag oder einfach so? Ich freue mich über jede Nachricht!</span><span data-en>Got a question — about school, writing, daily life or anything else? I'd love to hear from you!</span></p>
-      <form class="ask-form" name="ask-form" id="ask-form" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="sendQ(event)">
+      <form class="ask-form" name="ask-form" id="ask-form" onsubmit="sendQ(event)">
         <input type="hidden" name="form-name" value="ask-form" />
-        <p style="display:none;">
-          <label>Don’t fill this out if you’re human: <input name="bot-field" /></label>
-        </p>
         <input class="form-field" type="text" id="ask-name" name="name" placeholder="Dein Name / Your name (optional)" />
+        <input class="form-field" type="email" id="ask-email" name="email" placeholder="Deine Email / Your email" required />
         <textarea class="form-field" id="ask-q" name="question" placeholder="Deine Frage / Your question..."></textarea>
         <div class="success-msg" id="ask-ok"><span data-de>Danke! Ich melde mich bald. ✦</span><span data-en>Thanks! I'll get back to you soon. ✦</span></div>
         <button class="form-btn" type="submit"><span data-de>Frage senden →</span><span data-en>Send question →</span></button>
@@ -422,7 +420,7 @@
     <!-- NEWSLETTER -->
     <div id="newsletter">
       <div class="sidebar-title">Newsletter</div>
-      <p class="ask-intro"><span data-de>Alle zwei Wochen: neue Beiträge und Gedanken direkt in dein Postfach.</span><span data-en>Every two weeks: new posts and thoughts straight to your inbox.</span></p>
+      <p class="ask-intro"><span data-de>Neue Beiträge und Gedanken direkt in dein Postfach.</span><span data-en>Every two weeks: new posts and thoughts straight to your inbox.</span></p>
       <div class="nl-perks">
         <div class="nl-perk"><span data-de>Neue Beiträge als Erste lesen</span><span data-en>Be first to read new posts</span></div>
         <div class="nl-perk"><span data-de>Exklusive Einblicke hinter die Kulissen</span><span data-en>Exclusive behind-the-scenes</span></div>
@@ -438,7 +436,7 @@
       </form>
       <div class="success-msg" id="nl-ok"><span data-de>Willkommen an Bord! ✦</span><span data-en>Welcome aboard! ✦</span></div>
       <button class="form-btn" type="submit" form="newsletter-form"><span data-de>Jetzt anmelden →</span><span data-en>Subscribe →</span></button>
-      <div class="nl-note"><span data-de>Bereits über 800 Leser dabei ✦</span><span data-en>Over 800 readers already ✦</span></div>
+    
     </div>
   </div>
 </div>
@@ -502,13 +500,39 @@
 
   async function sendQ(event) {
     event.preventDefault();
-    if (!document.getElementById('ask-q').value.trim()) {
-      alert(document.body.classList.contains('lang-de') ? 'Bitte schreibe eine Frage.' : 'Please write a question first.'); return;
+    const name = document.getElementById('ask-name').value.trim();
+    const email = document.getElementById('ask-email').value.trim();
+    const question = document.getElementById('ask-q').value.trim();
+    const language = document.body.classList.contains('lang-de') ? 'de' : 'en';
+
+    if (!question) {
+      alert(document.body.classList.contains('lang-de') ? 'Bitte schreibe eine Frage.' : 'Please write a question first.');
+      return;
     }
+
+    if (!email || !email.includes('@')) {
+      alert(document.body.classList.contains('lang-de') ? 'Bitte gib eine gültige Email ein.' : 'Please enter a valid email.');
+      return;
+    }
+
     try {
-      await postNetlifyForm(document.getElementById('ask-form'));
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: name || 'Anonymer Nutzer',
+          email,
+          message: question,
+          language
+        })
+      });
+
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'Contact failed');
+
       document.getElementById('ask-ok').style.display = 'block';
       document.getElementById('ask-name').value = '';
+      document.getElementById('ask-email').value = '';
       document.getElementById('ask-q').value = '';
     } catch (error) {
       alert(document.body.classList.contains('lang-de') ? 'Senden fehlgeschlagen. Bitte später erneut versuchen.' : 'Sending failed. Please try again later.');
@@ -518,15 +542,28 @@
   // ── NEWSLETTER ──
   async function subscribe(event) {
     event.preventDefault();
-    const e = document.getElementById('nl-email').value.trim();
-    if (!e || !e.includes('@')) {
-      alert(document.body.classList.contains('lang-de') ? 'Bitte gültige E-Mail eingeben.' : 'Please enter a valid email.'); return;
+    const emailField = document.getElementById('nl-email');
+    const email = emailField.value.trim();
+    const language = document.body.classList.contains('lang-de') ? 'de' : 'en';
+
+    if (!email || !email.includes('@')) {
+      alert(document.body.classList.contains('lang-de') ? 'Bitte gültige E-Mail eingeben.' : 'Please enter a valid email.');
+      return;
     }
+
     try {
-      await postNetlifyForm(document.getElementById('newsletter-form'));
+      const response = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, language })
+      });
+
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'Subscription failed');
+
       document.getElementById('nl-ok').style.display = 'block';
       document.getElementById('nl-name').value = '';
-      document.getElementById('nl-email').value = '';
+      emailField.value = '';
     } catch (error) {
       alert(document.body.classList.contains('lang-de') ? 'Anmeldung fehlgeschlagen. Bitte später erneut versuchen.' : 'Subscription failed. Please try again later.');
     }

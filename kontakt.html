@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kontakt | Hanna's Blog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    :root { --navy: #2F3A55; --slate: #5C6B8A; --mid: #6E6F73; --warm: #e7e2de; --light: #F5F6F3; --white: #ffffff; }
+    body { font-family: 'Jost', sans-serif; background: var(--light); color: var(--navy); line-height: 1.6; }
+    .lang-bar { background: var(--navy); display: flex; justify-content: flex-end; align-items: center; padding: 0.45rem 4rem; gap: 0.4rem; }
+    .lang-label { font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-right: 0.5rem; }
+    .lang-btn { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.22rem 0.65rem; border: 1px solid transparent; background: none; color: rgba(255,255,255,0.45); cursor: pointer; font-family: 'Jost', sans-serif; transition: all 0.2s; }
+    .lang-btn.active { background: rgba(255,255,255,0.15); color: #fff; border-color: rgba(255,255,255,0.3); }
+    .lang-btn:hover { color: #fff; }
+    .lang-sep { color: rgba(255,255,255,0.2); font-size: 0.7rem; }
+    [data-de] { display: none; }
+    body.lang-de [data-de] { display: revert; }
+    body.lang-de [data-en] { display: none !important; }
+    .nav { display: flex; justify-content: space-between; align-items: center; padding: 1.4rem 4rem; background: var(--white); border-bottom: 1px solid var(--warm); position: sticky; top: 0; z-index: 100; }
+    .nav-logo { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 600; font-size: 1.6rem; color: var(--navy); text-decoration: none; }
+    .nav-link { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); text-decoration: none; }
+    .nav-link:hover { color: var(--navy); }
+    .nav-right { display: flex; gap: 0.8rem; align-items: center; }
+    .nav-subscribe { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.5rem 1.2rem; background: var(--navy); color: #fff; border: none; cursor: pointer; font-family: 'Jost', sans-serif; transition: background 0.2s; }
+    .nav-subscribe:hover { background: var(--slate); }
+    .contact-container { max-width: 700px; margin: 4rem auto; padding: 0 4rem; }
+    .contact-title { font-family: 'Cormorant Garamond', serif; font-size: 3rem; margin-bottom: 1rem; }
+    .contact-intro { font-size: 0.96rem; color: var(--mid); margin-bottom: 3rem; line-height: 1.8; }
+    .form-group { margin-bottom: 1.8rem; }
+    .form-label { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--navy); display: block; margin-bottom: 0.5rem; font-weight: 500; }
+    .form-input, .form-textarea { width: 100%; padding: 0.8rem; border: 1px solid var(--warm); background: var(--white); font-family: 'Jost', sans-serif; font-size: 0.95rem; color: var(--navy); }
+    .form-input:focus, .form-textarea:focus { outline: none; border-color: var(--navy); }
+    .form-textarea { min-height: 150px; resize: vertical; }
+    .form-button { background: var(--navy); color: #fff; padding: 0.8rem 2rem; border: none; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; font-family: 'Jost', sans-serif; transition: background 0.2s; width: 100%; }
+    .form-button:hover { background: var(--slate); }
+    .form-button:disabled { background: #ccc; cursor: not-allowed; }
+    .message { padding: 1rem; margin-bottom: 1.5rem; border-radius: 4px; font-size: 0.9rem; }
+    .message.success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+    .message.error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+    .footer { padding: 2.5rem 4rem; background: var(--white); border-top: 1px solid var(--warm); display: flex; justify-content: space-between; align-items: center; margin-top: 4rem; }
+    .footer-logo { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.2rem; color: var(--mid); font-weight: 600; text-decoration: none; }
+    .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+    .footer-links a { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: #aaa; text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--navy); }
+    .footer-copy { font-size: 0.7rem; color: #aaa; }
+    @media (max-width: 1024px) {
+      .contact-container { padding: 0 2rem; margin: 2rem auto; }
+      .contact-title { font-size: 2rem; }
+      .footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body class="lang-de">
+<div class="lang-bar">
+  <span class="lang-label">Sprache / Language</span>
+  <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+  <span class="lang-sep">|</span>
+  <button class="lang-btn active" id="btn-de" onclick="setLang('de')">DE</button>
+</div>
+
+<nav class="nav">
+  <a href="blog.html" class="nav-logo">Hanna.</a>
+  <a href="blog.html" class="nav-link"><span data-de>Zum Blog</span><span data-en>To blog</span></a>
+  <div class="nav-right">
+    <button class="nav-subscribe" onclick="document.querySelector('form').scrollIntoView({behavior:'smooth'})">Schreiben</button>
+  </div>
+</nav>
+
+<div class="contact-container">
+  <h1 class="contact-title"><span data-de>Kontakt</span><span data-en>Contact</span></h1>
+  <p class="contact-intro">
+    <span data-de>Du hast eine Frage oder möchtest mir etwas mitteilen? Schreib mir gerne eine Nachricht! Ich antworte dir so schnell wie möglich.</span>
+    <span data-en>Have a question or want to reach out? Send me a message! I'll get back to you as soon as possible.</span>
+  </p>
+
+  <div id="messageContainer"></div>
+
+  <form id="contactForm">
+    <div class="form-group">
+      <label class="form-label"><span data-de>Name</span><span data-en>Name</span></label>
+      <input type="text" name="name" class="form-input" required>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label"><span data-de>Email-Adresse</span><span data-en>Email Address</span></label>
+      <input type="email" name="email" class="form-input" required>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label"><span data-de>Nachricht</span><span data-en>Message</span></label>
+      <textarea name="message" class="form-textarea" required></textarea>
+    </div>
+
+    <button type="submit" class="form-button"><span data-de>Senden</span><span data-en>Send</span></button>
+  </form>
+</div>
+
+<footer class="footer">
+  <a href="blog.html" class="footer-logo">Hanna.</a>
+  <ul class="footer-links">
+    <li><a href="blog.html#about"><span data-de>Über mich</span><span data-en>About</span></a></li>
+    <li><a href="kontakt.html"><span data-de>Kontakt</span><span data-en>Contact</span></a></li>
+    <li><a href="impressum.html">Impressum</a></li>
+    <li><a href="datenschutz.html"><span data-de>Datenschutz</span><span data-en>Privacy</span></a></li>
+  </ul>
+  <div class="footer-copy">© 2026 Hanna · <span data-de>mit Liebe gemacht</span><span data-en>made with love</span></div>
+</footer>
+
+<script>
+  function setLang(l) {
+    document.body.classList.toggle('lang-de', l === 'de');
+    document.documentElement.lang = l;
+    document.getElementById('btn-de').classList.toggle('active', l === 'de');
+    document.getElementById('btn-en').classList.toggle('active', l === 'en');
+    localStorage.setItem('hanna-lang', l);
+  }
+  const saved = localStorage.getItem('hanna-lang');
+  if (saved) setLang(saved);
+
+  // Formular-Handling
+  document.getElementById('contactForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const button = e.target.querySelector('button');
+    button.disabled = true;
+    button.textContent = document.body.classList.contains('lang-de') ? 'Wird gesendet...' : 'Sending...';
+
+    const formData = new FormData(e.target);
+    const language = document.body.classList.contains('lang-de') ? 'de' : 'en';
+    
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.get('name'),
+          email: formData.get('email'),
+          message: formData.get('message'),
+          language: language
+        })
+      });
+
+      const data = await response.json();
+      const messageContainer = document.getElementById('messageContainer');
+
+      if (response.ok) {
+        messageContainer.innerHTML = `<div class="message success">${data.message}</div>`;
+        e.target.reset();
+      } else {
+        messageContainer.innerHTML = `<div class="message error">${data.error || 'Ein Fehler ist aufgetreten'}</div>`;
+      }
+    } catch (error) {
+      document.getElementById('messageContainer').innerHTML = `<div class="message error">Fehler beim Senden. Bitte versuche es später erneut.</div>`;
+    } finally {
+      button.disabled = false;
+      button.textContent = document.body.classList.contains('lang-de') ? 'Senden' : 'Send';
+    }
+  });
+</script>
+</body>
+</html>

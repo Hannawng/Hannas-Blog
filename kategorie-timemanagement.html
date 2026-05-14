@@ -121,6 +121,68 @@
     <div class="side-card" id="newsletter">
       <div class="sidebar-title">Newsletter</div>
       <div class="post-excerpt"><span data-de>Alle zwei Wochen neue Beiträge und Gedanken direkt in dein Postfach.</span><span data-en>Every two weeks: new posts and thoughts straight to your inbox.</span></div>
+      <form id="newsletterForm" style="margin-top: 1rem;">
+        <input 
+          type="email" 
+          name="email" 
+          placeholder="Email" 
+          required
+          style="width: 100%; padding: 0.6rem; border: 1px solid var(--warm); margin-bottom: 0.8rem; font-family: 'Jost', sans-serif; background: var(--white); font-size: 0.85rem;"
+        >
+        <button 
+          type="submit" 
+          style="width: 100%; padding: 0.6rem; background: var(--navy); color: white; border: none; cursor: pointer; font-family: 'Jost', sans-serif; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; transition: background 0.2s;"
+          onmouseover="this.style.background='var(--slate)'"
+          onmouseout="this.style.background='var(--navy)'"
+        >
+          <span data-de>Anmelden</span><span data-en>Subscribe</span>
+        </button>
+        <div id="newsletterMessage" style="margin-top: 0.8rem; font-size: 0.75rem;"></div>
+      </form>
+      <script>
+        document.getElementById('newsletterForm').addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const form = e.target;
+          const button = form.querySelector('button');
+          const messageDiv = document.getElementById('newsletterMessage');
+          const language = document.body.classList.contains('lang-de') ? 'de' : 'en';
+          
+          button.disabled = true;
+          button.style.opacity = '0.6';
+          
+          try {
+            const response = await fetch('/api/newsletter', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                email: form.querySelector('input[name="email"]').value,
+                language: language
+              })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+              messageDiv.style.color = '#155724';
+              messageDiv.textContent = language === 'de' 
+                ? '✓ Danke! Schau in dein Postfach 📧' 
+                : '✓ Thank you! Check your inbox 📧';
+              form.reset();
+            } else {
+              messageDiv.style.color = '#721c24';
+              messageDiv.textContent = data.error || (language === 'de' ? 'Fehler' : 'Error');
+            }
+          } catch (error) {
+            messageDiv.style.color = '#721c24';
+            messageDiv.textContent = language === 'de' 
+              ? 'Verbindungsfehler' 
+              : 'Connection error';
+          } finally {
+            button.disabled = false;
+            button.style.opacity = '1';
+          }
+        });
+      </script>
     </div>
   </aside>
 </div>

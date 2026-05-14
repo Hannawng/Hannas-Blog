@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Newsletter Admin | Hanna's Blog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    :root { --navy: #2F3A55; --slate: #5C6B8A; --mid: #6E6F73; --warm: #e7e2de; --light: #F5F6F3; --white: #ffffff; }
+    body { font-family: 'Jost', sans-serif; background: var(--light); color: var(--navy); line-height: 1.6; }
+    .nav { display: flex; justify-content: space-between; align-items: center; padding: 1.4rem 4rem; background: var(--white); border-bottom: 1px solid var(--warm); position: sticky; top: 0; z-index: 100; }
+    .nav-logo { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 600; font-size: 1.6rem; color: var(--navy); text-decoration: none; }
+    .nav-link { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); text-decoration: none; }
+    .nav-link:hover { color: var(--navy); }
+    .admin-container { max-width: 800px; margin: 4rem auto; padding: 0 4rem; }
+    .admin-title { font-family: 'Cormorant Garamond', serif; font-size: 3rem; margin-bottom: 1rem; }
+    .admin-intro { font-size: 0.96rem; color: var(--mid); margin-bottom: 3rem; line-height: 1.8; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+    .stat-card { background: var(--white); border: 1px solid var(--warm); padding: 1.5rem; text-align: center; }
+    .stat-number { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; color: var(--navy); font-weight: 600; }
+    .stat-label { font-size: 0.8rem; color: var(--mid); text-transform: uppercase; letter-spacing: 0.1em; }
+    .form-group { margin-bottom: 1.8rem; }
+    .form-label { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--navy); display: block; margin-bottom: 0.5rem; font-weight: 500; }
+    .form-input, .form-textarea { width: 100%; padding: 0.8rem; border: 1px solid var(--warm); background: var(--white); font-family: 'Jost', sans-serif; font-size: 0.95rem; color: var(--navy); }
+    .form-input:focus, .form-textarea:focus { outline: none; border-color: var(--navy); }
+    .form-textarea { min-height: 200px; resize: vertical; }
+    .form-button { background: var(--navy); color: #fff; padding: 0.8rem 2rem; border: none; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; font-family: 'Jost', sans-serif; transition: background 0.2s; width: 100%; }
+    .form-button:hover { background: var(--slate); }
+    .form-button:disabled { background: #ccc; cursor: not-allowed; }
+    .message { padding: 1rem; margin-bottom: 1.5rem; border-radius: 4px; font-size: 0.9rem; }
+    .message.success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+    .message.error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+    .subscribers-list { background: var(--white); border: 1px solid var(--warm); padding: 1.5rem; margin-top: 2rem; }
+    .subscribers-title { font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--navy); margin-bottom: 1rem; font-weight: 500; }
+    .subscriber-item { padding: 0.5rem 0; border-bottom: 1px solid var(--light); font-size: 0.85rem; color: var(--mid); }
+    .subscriber-item:last-child { border-bottom: none; }
+    @media (max-width: 1024px) {
+      .admin-container { padding: 0 2rem; margin: 2rem auto; }
+      .admin-title { font-size: 2rem; }
+      .stats-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <a href="blog.html" class="nav-logo">Hanna.</a>
+  <a href="blog.html" class="nav-link">Zum Blog</a>
+</nav>
+
+<div class="admin-container">
+  <h1 class="admin-title">Newsletter Admin</h1>
+  <p class="admin-intro">
+    Hier kannst du Newsletter an alle Abonnenten verschicken. Die Emails werden gespeichert und später versendet, wenn die Email-Funktionalität aktiviert ist.
+  </p>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-number" id="subscriberCount">0</div>
+      <div class="stat-label">Abonnenten</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" id="newsletterCount">0</div>
+      <div class="stat-label">Gesendete Newsletter</div>
+    </div>
+  </div>
+
+  <div id="messageContainer"></div>
+
+  <form id="newsletterForm">
+    <div class="form-group">
+      <label class="form-label">Betreff</label>
+      <input type="text" name="subject" class="form-input" placeholder="Newsletter Betreff" required>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Nachricht (HTML erlaubt)</label>
+      <textarea name="content" class="form-textarea" placeholder="Schreibe deinen Newsletter hier..." required></textarea>
+    </div>
+
+    <button type="submit" class="form-button">Newsletter versenden</button>
+  </form>
+
+  <div class="subscribers-list">
+    <div class="subscribers-title">Aktuelle Abonnenten</div>
+    <div id="subscribersList">Lade Abonnenten...</div>
+  </div>
+</div>
+
+<script>
+  // Lade Statistiken und Abonnenten
+  async function loadData() {
+    try {
+      const response = await fetch('/api/admin/stats');
+      const data = await response.json();
+
+      document.getElementById('subscriberCount').textContent = data.subscribers || 0;
+      document.getElementById('newsletterCount').textContent = data.newsletters || 0;
+
+      const subscribersList = document.getElementById('subscribersList');
+      if (data.subscribersList && data.subscribersList.length > 0) {
+        subscribersList.innerHTML = data.subscribersList.map(sub =>
+          `<div class="subscriber-item">${sub.email} <small>(${new Date(sub.date).toLocaleDateString('de-DE')})</small></div>`
+        ).join('');
+      } else {
+        subscribersList.innerHTML = '<div class="subscriber-item">Noch keine Abonnenten</div>';
+      }
+    } catch (error) {
+      console.error('Fehler beim Laden der Daten:', error);
+      document.getElementById('subscribersList').innerHTML = '<div class="subscriber-item">Fehler beim Laden</div>';
+    }
+  }
+
+  // Newsletter versenden
+  document.getElementById('newsletterForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const button = e.target.querySelector('button');
+    button.disabled = true;
+    button.textContent = 'Wird versendet...';
+
+    const formData = new FormData(e.target);
+
+    try {
+      const response = await fetch('/api/admin/send-newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          subject: formData.get('subject'),
+          content: formData.get('content')
+        })
+      });
+
+      const data = await response.json();
+      const messageContainer = document.getElementById('messageContainer');
+
+      if (response.ok) {
+        messageContainer.innerHTML = `<div class="message success">${data.message}</div>`;
+        e.target.reset();
+        loadData(); // Statistiken aktualisieren
+      } else {
+        messageContainer.innerHTML = `<div class="message error">${data.error || 'Fehler beim Versenden'}</div>`;
+      }
+    } catch (error) {
+      document.getElementById('messageContainer').innerHTML = `<div class="message error">Verbindungsfehler</div>`;
+    } finally {
+      button.disabled = false;
+      button.textContent = 'Newsletter versenden';
+    }
+  });
+
+  // Daten beim Laden laden
+  loadData();
+</script>
+</body>
+</html>
